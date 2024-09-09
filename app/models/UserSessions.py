@@ -6,21 +6,16 @@ from sqlalchemy.orm import relationship
 
 from app.core.database import Base
 
-class User_session(Base):
+class UserSession(Base):
     __tablename__ = 'user_session'
 
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    user_uuid =Column(Integer(200))
-    church_uuid = Column(Integer(200))
+    user_uuid =Column(UUID(200))
+    church_uuid = Column(UUID(200))
     token = Column(String(255), unique=True)
     firebase_token = Column(String(250))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
-    deleted_at = Column(DateTime, nullable=True, default=None, onupdate=datetime.now)
-  
-     
-
-    def get_context_string(self, context: str):
-        return f"{context}{self.password[-6:]}{self.updated_at.strftime('%m%d%Y%H%M%S')}".strip()
+    deleted_at = Column(DateTime, nullable=True, default=None)
