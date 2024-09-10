@@ -4,8 +4,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
+from app.models.Base import BaseModel
 
-class Countries(Base):
+class Countries(BaseModel):
     __tablename__= 'countries'
 
     uuid = Column(

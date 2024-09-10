@@ -4,9 +4,10 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
+from app.models.Base import BaseModel
 
 
-class Churches(Base):
+class Churches(BaseModel):
     __tablename__ = 'churches'
 
     uuid = Column(

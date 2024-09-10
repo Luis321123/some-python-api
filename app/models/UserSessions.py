@@ -4,8 +4,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
+from app.models.Base import BaseModel
 
-class UserSession(Base):
+class UserSession(BaseModel):
     __tablename__ = 'user_session'
 
     uuid = Column(
@@ -18,3 +19,5 @@ class UserSession(Base):
     firebase_token = Column(String(250))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
+
+    user = relationship("UserSession", back_populates="user_session", uselist=False)
