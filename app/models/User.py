@@ -23,13 +23,13 @@ class User(BaseModel):
     city_uuid = Column(UUID(150), ForeignKey('cities.id'), index=True)
     country_uuid = Column(UUID(150), ForeignKey('countries.id'), default=None)
 
+    avatar = Column(UUID(150), nullable=True, default=None)
     name = Column(String(50))
     last_name = Column(String(150))
     email = Column(String(50), unique=True, index=True)
     birth = Column(Date)
     phone = Column(String(20), index=True)
     address = Column(String(125), index=True)
-    avatar = Column(Integer, nullable=True, default=None)
     gender = Column(Enum(Gender), nullable=False, default=None)
     password = Column(String(50), nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
@@ -40,5 +40,9 @@ class User(BaseModel):
     
 
 
-    user_session = relationship("User", back_populates="user", uselist=False)
-    files = relationship("User", back_populates="user")
+    user_session = relationship("UserSession", back_populates="user", uselist=False)
+    files = relationship("Files", back_populates="user")
+    countries = relationship("Countries", back_populates="user", uselist=False)
+    cities = relationship("Cities", back_populates="user", uselist=False)
+    role = relationship("Roles", back_populates="user", uselist=False)
+    churches = relationship("Churches", back_populates="user", uselist=False)
