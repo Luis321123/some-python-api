@@ -8,7 +8,7 @@ from app.models.Base import BaseModel
 
 
 class ChurchUsers(BaseModel):
-    __tablename__ = 'church_user'
+    __tablename__ = 'church_users'
 
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
@@ -22,3 +22,6 @@ class ChurchUsers(BaseModel):
     active = Column(Boolean[True])
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
+
+    user = relationship("User", back_populates="church_users", uselist=False)
+    churches = relationship("Churches", back_populates="church_user", uselist= False)

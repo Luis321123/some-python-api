@@ -45,4 +45,4 @@ class User(BaseModel):
     countries = relationship("Countries", back_populates="user", uselist=False)
     cities = relationship("Cities", back_populates="user", uselist=False)
     role = relationship("Roles", back_populates="user", uselist=False)
-    churches = relationship("Churches", back_populates="user", uselist=False)
+    church_user = relationship("ChurchUser", back_populates="users", uselist=False)
