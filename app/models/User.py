@@ -1,6 +1,5 @@
-from datetime import datetime
 from uuid import uuid4
-from sqlalchemy import Column, DateTime, String ,Integer,  Date, Enum , func
+from sqlalchemy import Column, DateTime, String ,Integer ,  Date, Enum , func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -18,7 +17,7 @@ class User(Base):
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    name = Column(String(150))
+    name = Column(String(50))
     last_name = Column(String(150))
     email = Column(String(50), unique=True, index=True)
     birth = Column(Date)

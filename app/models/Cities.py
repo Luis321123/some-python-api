@@ -5,16 +5,15 @@ from sqlalchemy.orm import relationship
 
 from app.core.database import Base
 
-class UserSession(Base):
-    __tablename__ = 'user_session'
+
+class Cities(Base):
+    __tablename__= 'cities'
 
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    user_uuid =Column(UUID(200))
-    church_uuid = Column(UUID(200))
-    token = Column(String(255), unique=True)
-    firebase_token = Column(String(250))
+    region_uuid = Column(UUID(150), index=True)
+    name = Column(String(120))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
