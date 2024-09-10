@@ -1,5 +1,5 @@
 from uuid import uuid4
-from sqlalchemy import Column, DateTime, String, func, Boolean
+from sqlalchemy import Column, DateTime, String, func, Boolean, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -14,9 +14,10 @@ class ChurchUsers(BaseModel):
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    church_uuid = Column(UUID(200))
-    user_uuid = Column(UUID(200))
-    role_uuid = Column(UUID(200), index=True)
+    church_uuid = Column(UUID(200), ForeignKey('churches.id'))
+    user_uuid = Column(UUID(200), ForeignKey('users.id'))
+    role_uuid = Column(UUID(200), ForeignKey('roles.id'), index=True)
+
     position = Column(String(150), index=True)
     active = Column(Boolean[True])
     created_at = Column(DateTime, nullable=False, server_default=func.now())

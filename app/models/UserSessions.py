@@ -1,5 +1,5 @@
 from uuid import uuid4
-from sqlalchemy import Column, DateTime, String, func
+from sqlalchemy import Column, DateTime, String, func, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -13,8 +13,9 @@ class UserSession(BaseModel):
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    user_uuid =Column(UUID(200))
-    church_uuid = Column(UUID(200))
+    user_uuid =Column(UUID(200), ForeignKey('users.id'))
+    church_uuid = Column(UUID(200), ForeignKey('churches.id'))
+   
     token = Column(String(255), unique=True)
     firebase_token = Column(String(250))
     created_at = Column(DateTime, nullable=False, server_default=func.now())

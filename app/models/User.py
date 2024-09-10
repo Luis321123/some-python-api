@@ -41,4 +41,4 @@ class User(BaseModel):
 
 
     user_session = relationship("User", back_populates="user", uselist=False)
-    
+    files = relationship("User", back_populates="user")

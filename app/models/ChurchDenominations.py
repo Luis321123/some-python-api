@@ -13,6 +13,7 @@ class ChurchDenominations(BaseModel):
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
+   
     name = Column(String(150))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
