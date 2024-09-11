@@ -22,4 +22,4 @@ class Churches(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 
-    user = relationship("User", back_populates= "churches")
+    church_user = relationship("ChurchUser", back_populates= "churches")

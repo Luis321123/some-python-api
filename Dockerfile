@@ -1,7 +1,7 @@
-FROM python:3.11
+FROM python:3.12
 
 # set work directory
-WORKDIR /app/
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
