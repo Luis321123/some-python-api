@@ -27,3 +27,4 @@ class ChurchUsers(BaseModel):
     
     user = relationship("User", back_populates="church_user", uselist=False)
     churches = relationship("Churches", back_populates="church_user", uselist= False)
+    roles = relationship ( "Roles", back_populates="church_users", uselist= False)

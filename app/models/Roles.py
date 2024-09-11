@@ -19,4 +19,4 @@ class Roles(BaseModel):
 
 #RELEACIONES
 
-    user = relationship("User", back_populates= "role")
+    church_users = relationship ( "ChurchUsers", back_populates="roles")

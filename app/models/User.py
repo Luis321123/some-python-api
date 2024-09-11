@@ -46,4 +46,3 @@ class User(BaseModel):
     user_session = relationship("UserSession", back_populates="user", uselist=False)
     countries = relationship("Countries", back_populates="user", uselist=False)
     cities = relationship("Cities", back_populates="user", uselist=False)
-    role = relationship("Roles", back_populates="user", uselist=False)
