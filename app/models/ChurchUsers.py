@@ -22,6 +22,8 @@ class ChurchUsers(BaseModel):
     active = Column(Boolean[True])
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
-
+    
+    #RELACIONES
+    
     user = relationship("User", back_populates="church_user", uselist=False)
     churches = relationship("Churches", back_populates="church_user", uselist= False)

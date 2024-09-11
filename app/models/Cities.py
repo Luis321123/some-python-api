@@ -20,5 +20,8 @@ class Cities(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 
+
+#RELEACIONES
+
     user = relationship("User",back_populates="cities")
     

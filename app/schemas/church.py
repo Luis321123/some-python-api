@@ -22,7 +22,7 @@ class ChurchUpdate(ChurchBase):
 
 class ChurchInDB(ChurchBase):
     uuid: UUID4
-    created_at: datetime
+    created_at: datetime = None
     deleted_at: Optional[datetime] = None
 
     class Config:

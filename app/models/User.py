@@ -38,6 +38,7 @@ class User(BaseModel):
     def get_context_string(self, context: str):
         return f"{context}{self.password[-6:]}{self.create_at.strftime('%m%d%Y%H%M%S')}".strip()
     
+    #RELEACIONES
 
 
     files = relationship("Files", back_populates="user")

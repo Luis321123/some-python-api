@@ -17,7 +17,7 @@ class UserSessionCreate(UserSessionBase):
     
 class UserInDB(UserSessionBase):
     uuid: UUID4
-    created_at: datetime = False
+    created_at: datetime = None
     deleted_at: Optional[datetime] = None
 
     class Config:
