@@ -40,9 +40,9 @@ class User(BaseModel):
     
 
 
-    user_session = relationship("UserSession", back_populates="user", uselist=False)
     files = relationship("Files", back_populates="user")
+    church_user = relationship("ChurchUsers", back_populates="user")
+    user_session = relationship("UserSession", back_populates="user", uselist=False)
     countries = relationship("Countries", back_populates="user", uselist=False)
     cities = relationship("Cities", back_populates="user", uselist=False)
     role = relationship("Roles", back_populates="user", uselist=False)
-    church_user = relationship("ChurchUser", back_populates="users", uselist=False)

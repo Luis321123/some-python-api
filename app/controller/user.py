@@ -12,20 +12,12 @@ from app.services.base import CRUDBase
 
 
 class UserController(CRUDBase[User, UserCreate, UserUpdate]):
-    async def create_user(self, id: str, data: UserCreate, session: Session):
+    async def create_user(self, church_id: str, data: UserCreate, session: Session):
         try:
             user = await self.create(db=session, obj_in=data)
+            
             return user
-        
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
-
-            
-
-
-
-     
-    
-
 
 user = UserController(User)
