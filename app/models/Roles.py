@@ -17,6 +17,5 @@ class Roles(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 
-#RELEACIONES
-
+    #RELEACIONES
     church_users = relationship ( "ChurchUsers", back_populates="roles")

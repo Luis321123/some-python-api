@@ -29,15 +29,14 @@ def init_db(db: Session) -> None:
     member_role = role_services.get_by_name(db=db, name=Role.MEMBER["name"])
     if not member_role:
         user_role_in = Roles(
-            name=Role.MEMBER["name"], description=Role.MEMBER["description"]
+            name=Role.MEMBER["name"]
         )   
         role_services.create(db, obj_in=user_role_in)
 
     admin_role = role_services.get_by_name(db=db, name=Role.ADMINISTRATOR["name"])
     if not admin_role:
         admin_role_in = Roles(
-            name=Role.ADMINISTRATOR["name"],
-            description=Role.ADMINISTRATOR["description"],
+            name=Role.ADMINISTRATOR["name"]
         )
         role_services.create(db, obj_in=admin_role_in)
 
