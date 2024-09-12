@@ -7,6 +7,7 @@ from pydantic import UUID4, BaseModel, EmailStr, validator
 class UserBase(BaseModel):
     name: str  | None= None
     last_name: str = None
+    is_superuser:bool = False
     email: EmailStr | None= None
     birth: Date | None = None
     phone: str = False

@@ -1,6 +1,6 @@
 
 from uuid import uuid4
-from sqlalchemy import Column, DateTime, String ,Integer ,  Date, Enum , func, ForeignKey
+from sqlalchemy import Column, DateTime, String , Boolean ,  Date, Enum , func, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -26,6 +26,7 @@ class User(BaseModel):
     avatar = Column(UUID(150), nullable=True, default=None)
     name = Column(String(50))
     last_name = Column(String(150))
+    is_superuser=Column(Boolean, default=False)
     email = Column(String(50), unique=True, index=True)
     birth = Column(Date)
     phone = Column(String(20), index=True)

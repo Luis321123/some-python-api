@@ -18,7 +18,7 @@ class Churches(BaseModel):
     name = Column(String(150))
     fullname = Column(String(50), unique=True, index=True)
     city_uuid = Column(UUID(150), index=True)
-    active = Column(Boolean[True])
+    active = Column(Boolean, default=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 

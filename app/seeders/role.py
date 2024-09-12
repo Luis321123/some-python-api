@@ -13,3 +13,9 @@ class Role:
         "name": "member",
         "description": "Role for the usual user who enters to the application like a church follower"
     }
+    
+    
+    SUPERUSER = {
+        "name": "superuser",
+        "description": "The most highest level of authorization in the application and creation"
+    }

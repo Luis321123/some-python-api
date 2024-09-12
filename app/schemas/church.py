@@ -7,7 +7,7 @@ from pydantic import UUID4, BaseModel, EmailStr, validator, default
 class ChurchBase(BaseModel):
     name: str  | None= None
     fullname: str = None
-    active: Date | None = None
+    active: bool | default = None
     phone: str = False
     address: str = False
     city_uuid: UUID4[str] = None    

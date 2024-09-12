@@ -1,14 +1,15 @@
 from sqlalchemy.orm import Session
 
-from app.settings import get_settings
-from app.auth.config import get_hash_password
-from app.auth.controller import auth
+from app.core.settings import get_settings
+from app.core.security import get_hash_password
+from app.controller.auth import auth
 from app.models.Countries import Countries
 from app.seeders import countries
-from app.models.Roles import Rol
+from app.models.Roles import Roles
 from app.seeders.role import Role 
+from app.controller.user import user as user_controller
 from app.services.role import role as role_services
-from app.services import serviceUser
+from app.services.user import user
 from app.schemas.user import UserCreate
 
 settings = get_settings()
@@ -27,14 +28,14 @@ def init_db(db: Session) -> None:
 # Create Role If They Don't Exist
     member_role = role_services.get_by_name(db=db, name=Role.MEMBER["name"])
     if not member_role:
-        user_role_in = Rol(
-            name=Role.CONSUMER["name"], description=Role.CONSUMER["description"]
+        user_role_in = Roles(
+            name=Role.MEMBER["name"], description=Role.MEMBER["description"]
         )   
         role_services.create(db, obj_in=user_role_in)
 
     admin_role = role_services.get_by_name(db=db, name=Role.ADMINISTRATOR["name"])
     if not admin_role:
-        admin_role_in = Rol(
+        admin_role_in = Roles(
             name=Role.ADMINISTRATOR["name"],
             description=Role.ADMINISTRATOR["description"],
         )
@@ -43,13 +44,7 @@ def init_db(db: Session) -> None:
 # Create super user admin test
     # user_current = auth.get_by_email(db=db, email=settings.FIRST_ADMIN_EMAIL)
     # if not user_current:
-    #     admin_role = role_services.get_by_name(db=db, name=Role.ADMINISTRATOR["name"])
-    #     user_in = UserCreate(
-    #         name=settings.FIRST_ADMIN_ACCOUNT_NAME,
-    #         lastname=settings.FIRST_ADMIN_ACCOUNT_LASTNAME,
-    #         email=settings.FIRST_ADMIN_EMAIL,
-    #         password=get_hash_password(settings.FIRST_ADMIN_PASSWORD),
-    #         active=True,
-    #         roles_id=admin_role.id
+    #       user_in = UserCreate(
+             
     #     )
-    #     serviceUser.create(db=db, obj_in=user_in)
+    # user_controller.create(db=db, obj_in=user_in)  

@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Header, BackgroundTasks, Depends, HTTPException, status, UploadFile, File, Query
+from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from sqlalchemy import Session
 
-
-from app import services
 from app.core.database import get_session
 from app.controller.auth import auth as auth_controller
 

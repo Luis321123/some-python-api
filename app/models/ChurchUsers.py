@@ -19,7 +19,7 @@ class ChurchUsers(BaseModel):
     role_uuid = Column(UUID(200), ForeignKey('roles.id'), index=True)
 
     position = Column(String(150), index=True)
-    active = Column(Boolean[True])
+    active = Column(Boolean, default=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
     
