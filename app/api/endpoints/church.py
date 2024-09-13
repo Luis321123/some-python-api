@@ -9,6 +9,7 @@ from app.core.database import get_session
 from app.schemas.church import ChurchCreate, ChurchUpdate, ChurchInD, ChurchBase
 from app.models.Churches import Churches, uuid
 from app.controller.church import church as church_controller
+from app.api.deps import get_current_user, get_current_admin, get_current_is_superuser
 
 router = APIRouter()
 
@@ -18,10 +19,10 @@ async def get_church(id: str, session: Session = Depends(get_session)):
     return church_current
 
 @router.post('/create', status_code=status.HTTP_201_CREATED)
-async def create_church(data:ChurchCreate, session: Session = Depends(get_session)):
+async def create_church(data:ChurchCreate, session: Session = Depends(get_session), user: User = Depends(get_current_is_superuser)):
     church_create = await church_controller.create_church(db=session, obj_in=data)
     return JSONResponse({'message': 'created'})
-    
+
 @router.put('update/{id}', status_code=status.HTTP_200_OK)
 async def update_church(id: str, data:ChurchUpdate, session: Session = Depends(get_session)):
     await church_controller.update_church(data=data, church_id=id, session=session)
