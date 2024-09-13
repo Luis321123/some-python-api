@@ -6,8 +6,6 @@ from pydantic import UUID4, BaseModel
 class ChurchBase(BaseModel):
     name: str  | None= None
     fullname: str = None
-    phone: str = None
-    address: str = None
     city_uuid: Optional[UUID4] = None    
     active: bool = False 
 

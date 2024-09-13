@@ -11,5 +11,5 @@ router= APIRouter()
 @router.post('/create/{id}', status_code=status.HTTP_201_CREATED)
 async def user_create(id: str, data:UserCreate, session: Session = Depends(get_session)):
     await user_controller.create_user(church_id=id, data=data, session=session)
-    return JSONResponse(user_controller)
+    return JSONResponse({'message': 'created'})
 

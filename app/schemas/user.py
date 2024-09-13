@@ -16,9 +16,9 @@ class UserBase(BaseModel):
     birth: date | None = None
     phone: str = None
     address: str = None
-    city_uuid: UUID4 = None
-    country_uuid: UUID4 = None
-    avatar: UUID4 = None
+    city_uuid: Optional[UUID4] = None   
+    country_uuid: Optional[UUID4] = None   
+    avatar: Optional[UUID4] = None   
     gender: str = None # VALIDATE FOR GENDER ENUM
 
 

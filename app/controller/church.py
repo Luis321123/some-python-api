@@ -7,7 +7,7 @@ from app.models.Churches import Churches
 
 class ChurchController(CRUDBase[Churches, ChurchCreate, ChurchUpdate]):
     async def get_church(self, db:Session, id: str):
-        church = await db.query(self.model).filter(self.model.uuid == id).first()
+        church = db.query(self.model).filter(self.model.uuid == id).first()
         if not church:
             raise HTTPException(status_code=404, detail="Iglesia no encontrada.")
         return church
@@ -29,7 +29,7 @@ class ChurchController(CRUDBase[Churches, ChurchCreate, ChurchUpdate]):
 
     async def delete_church(self, church_id:str, session: Session):
         try:
-            self.remove(db=session, id=church_id)
+            self.remove(db=session, uuid=church_id)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
 

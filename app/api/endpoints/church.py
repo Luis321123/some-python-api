@@ -12,15 +12,15 @@ router = APIRouter()
 
 @router.get('/me/{id}',status_code=status.HTTP_200_OK)
 async def get_church(id: str, session: Session = Depends(get_session)):
-    church_current = await church_controller.get_church(db=Session, id=id)
+    church_current = await church_controller.get_church(db=session, id=id)
     return church_current
 
 @router.post('/create', status_code=status.HTTP_201_CREATED)
 async def create_church(data:ChurchCreate, session: Session = Depends(get_session), user: User = Depends(get_current_is_superuser)):
-    church_create = await church_controller.create_church(db=session, obj_in=data)
+    await church_controller.create_church(session=session, data=data)
     return JSONResponse({'message': 'created'})
 
-@router.put('update/{id}', status_code=status.HTTP_200_OK)
+@router.put('/update/{id}', status_code=status.HTTP_200_OK)
 async def update_church(id: str, data:ChurchUpdate, session: Session = Depends(get_session)):
     await church_controller.update_church(data=data, church_id=id, session=session)
     return JSONResponse({'message': 'updated'})

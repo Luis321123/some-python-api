@@ -20,8 +20,9 @@ class User(BaseModel):
 
     city_uuid = Column(UUID(150), ForeignKey('cities.uuid'), nullable=True, index=True)
     country_uuid = Column(UUID(150), ForeignKey('countries.uuid'), nullable=True, default=None)
-
     avatar = Column(UUID(150), nullable=True, default=None)
+    
+    
     name = Column(String(150))
     last_name = Column(String(150))
     is_superuser=Column(Boolean, default=False)

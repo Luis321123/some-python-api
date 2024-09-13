@@ -24,13 +24,13 @@ settings = get_settings()
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-async def hash_password(password: str) -> str: 
+def hash_password(password: str) -> str: 
     return pwd_context.hash(password)
 
-async def verify_password(plain_password: str, hashed_password: str) -> bool:
+def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-async def is_password_strong_enough(password: str) -> bool:
+def is_password_strong_enough(password: str) -> bool:
     if len(password) < 8:
         return False
 

@@ -16,7 +16,7 @@ class Churches(BaseModel):
 
     church_denomination_uuid = Column(UUID(200), ForeignKey('church_denominations.uuid'))
     name = Column(String(150))
-    fullname = Column(String(50), unique=True, index=True)
+    fullname = Column(String(200), unique=True, index=True)
     city_uuid = Column(UUID(150), index=True)
     active = Column(Boolean, default=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
