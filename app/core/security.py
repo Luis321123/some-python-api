@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from app.core.database import get_session
 from app.core.settings import get_settings
 
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -23,13 +24,13 @@ settings = get_settings()
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-def hash_password(password: str) -> str: 
+async def hash_password(password: str) -> str: 
     return pwd_context.hash(password)
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
+async def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-def is_password_strong_enough(password: str) -> bool:
+async def is_password_strong_enough(password: str) -> bool:
     if len(password) < 8:
         return False
 
@@ -67,8 +68,8 @@ async def get_token_user(token: str, db):
     from app.models.User import User
     payload = get_token_payload(token, settings.JWT_SECRET, settings.JWT_ALGORITHM)
     if payload: 
-        user_id = str_decode(str(payload.get('sub')))
-        user = db.query(User).filter(User.id == user_id).first()
+        user_uuid = str_decode(str(payload.get('sub')))
+        user = db.query(User).filter(User.uuid == user_uuid).first()
         
         if user: 
             return user
@@ -80,20 +81,4 @@ async def load_user(email: str, db):
         user = db.query(User).filter(User.email == email).first()
     except Exception as user_exec:
         user = None
-    return user
-
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
-    user = await get_token_user(token=token, db=db)
-    if user: 
-        return user
-    raise HTTPException(status_code=401, detail='Not authorised')
-
-async def get_current_active_superuser(token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
-    user = await get_token_user(token=token, db=db)
-
-    if not user:
-        raise HTTPException(status_code=401, detail='Not authorised')
-
-    if user.user_role.role.name == 'USER': 
-        raise HTTPException(status_code=401, detail='Not authorised')
     return user

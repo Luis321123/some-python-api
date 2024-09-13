@@ -25,9 +25,9 @@ def _generate_tokens(user):
         }
 
         at_payload = {
-            "sub": str_encode(str(user.id)),
+            "sub": str_encode(str(user.uuid)),
             'a': access_key,
-            'r': str_encode(str(user.id)),
+            'r': str_encode(str(user.uuid)),
             'n': str_encode(f"{user_data}")
         }
 
@@ -35,7 +35,7 @@ def _generate_tokens(user):
         access_token = generate_token(at_payload, settings.JWT_SECRET, settings.JWT_ALGORITHM, at_expires)
 
         rt_payload = {
-             "sub": str_encode(str(user.id)),
+             "sub": str_encode(str(user.uuid)),
              "t": refresh_key,
              'a': access_key
         }
@@ -54,9 +54,9 @@ async def get_refresh_token(refresh_token, db):
     
     token_payload = get_token_payload(refresh_token, settings.SECRET_KEY, settings.JWT_ALGORITHM)
     if not token_payload:
-        raise HTTPException(status_code=404, detail="Invalid Request")
+        raise HTTPException(status_code=404, detail="Invaluuid Request")
 
-    user_id = str_decode(str(token_payload.get('sub')))
-    user = db.query(User).filter(User.id == user_id).first()
+    user_uuid = str_decode(str(token_payload.get('sub')))
+    user = db.query(User).filter(User.uuid == user_uuid).first()
 
     return _generate_tokens(user)

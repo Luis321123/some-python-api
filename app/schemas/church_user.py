@@ -4,9 +4,9 @@ from pydantic import UUID4, BaseModel
 
 # Shared properties
 class ChurchUser(BaseModel):
-    user_uuid: UUID4 = None
-    church_uuid: UUID4 | None= None
-    role_uuid: UUID4 | None = None
+    user_uuid: Optional[UUID4] = None
+    church_uuid: Optional[UUID4] = None
+    role_uuid: Optional[UUID4] = None
     position: str = None
     active: bool = False
 

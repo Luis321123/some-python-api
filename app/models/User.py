@@ -3,8 +3,6 @@ from uuid import uuid4
 from sqlalchemy import Column, DateTime, String , Boolean ,  Date, Enum , func, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-
-from app.core.database import Base
 from app.models.BaseModel import BaseModel
 
 class Gender(Enum):

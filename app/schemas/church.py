@@ -6,9 +6,9 @@ from pydantic import UUID4, BaseModel
 class ChurchBase(BaseModel):
     name: str  | None= None
     fullname: str = None
-    phone: str = False
-    address: str = False
-    city_uuid: UUID4 = None    
+    phone: str = None
+    address: str = None
+    city_uuid: Optional[UUID4] = None    
     active: bool = False 
 
 # Properties to receive via API on creation

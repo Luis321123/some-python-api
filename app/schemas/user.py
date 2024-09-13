@@ -14,8 +14,8 @@ class UserBase(BaseModel):
     is_superuser: bool = False
     email: EmailStr = None
     birth: date | None = None
-    phone: str = False
-    address: str = False
+    phone: str = None
+    address: str = None
     city_uuid: UUID4 = None
     country_uuid: UUID4 = None
     avatar: UUID4 = None

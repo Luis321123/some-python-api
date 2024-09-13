@@ -16,7 +16,7 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     
     async def post_login_token(self, db:Session, obj_in: OAuth2PasswordRequestForm):
         try:
-            user = self.get_by_email(db=db, email=obj_in.username)
+            user = await self.get_by_email(db=db, email=obj_in.username)
             
             if not user:
                 raise ValueError("El correo electronico no está registrado con nosotros")
