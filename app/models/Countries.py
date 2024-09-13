@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.Base import BaseModel
+from app.models.BaseModel import BaseModel
 
 class Countries(BaseModel):
     __tablename__= 'countries'

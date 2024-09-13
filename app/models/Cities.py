@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.Base import BaseModel
+from app.models.BaseModel import BaseModel
 
 
 class Cities(BaseModel):
@@ -14,7 +14,7 @@ class Cities(BaseModel):
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    region_uuid = Column(UUID(150), ForeignKey('regions.id'), index=True)
+    region_uuid = Column(UUID(150), ForeignKey('regions.uuid'), index=True)
    
     name = Column(String(120))
     created_at = Column(DateTime, nullable=False, server_default=func.now())

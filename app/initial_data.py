@@ -1,8 +1,8 @@
 import logging
 
 from app.seeders import init_seeders
-from app.settings import get_settings
-from app.database import SessionLocal
+from app.core.settings import get_settings
+from app.core.database import SessionLocal
 
 settings = get_settings()
 

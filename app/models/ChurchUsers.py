@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.Base import BaseModel
+from app.models.BaseModel import BaseModel
 
 
 class ChurchUsers(BaseModel):
@@ -14,9 +14,9 @@ class ChurchUsers(BaseModel):
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
 
-    church_uuid = Column(UUID(200), ForeignKey('churches.id'))
-    user_uuid = Column(UUID(200), ForeignKey('users.id'))
-    role_uuid = Column(UUID(200), ForeignKey('roles.id'), index=True)
+    church_uuid = Column(UUID(200), ForeignKey('churches.uuid'))
+    user_uuid = Column(UUID(200), ForeignKey('users.uuid'))
+    role_uuid = Column(UUID(200), ForeignKey('roles.uuid'))
 
     position = Column(String(150), index=True)
     active = Column(Boolean, default=False)
@@ -26,5 +26,5 @@ class ChurchUsers(BaseModel):
     #RELACIONES
     
     user = relationship("User", back_populates="church_user", uselist=False)
-    churches = relationship("Churches", back_populates="church_user", uselist= False)
+    church = relationship("Churches", back_populates="church_user", uselist= False)
     roles = relationship ( "Roles", back_populates="church_users", uselist= False)

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
+from app.core.security import hash_password
 from app.schemas.church_user import ChurchUserCreate
 from app.models.User import User
 from app.schemas.user import UserCreate, UserUpdate
@@ -11,6 +12,7 @@ from app.controller.church_user import church_user as church_user_controller
 class UserController(CRUDBase[User, UserCreate, UserUpdate]):
     async def create_user(self, church_id: str, data: UserCreate, session: Session):
         try:
+            data.password = hash_password(data.password)
             user = await self.create(db=session, obj_in=data)
             role = await role_services.get_by_name(db=session, name="member")
             obj_in_church_user = ChurchUserCreate(

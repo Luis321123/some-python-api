@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.Base import BaseModel
+from app.models.BaseModel import BaseModel
 
 class Roles(BaseModel):
     __tablename__= 'roles'
@@ -18,4 +18,4 @@ class Roles(BaseModel):
     deleted_at = Column(DateTime, nullable=True, default=None)
 
     #RELEACIONES
-    church_users = relationship ( "ChurchUsers", back_populates="roles")
+    church_users = relationship("ChurchUsers", back_populates="roles")

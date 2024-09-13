@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.Base import BaseModel
+from app.models.BaseModel import BaseModel
 
 
 class ChurchDenominations(BaseModel):
@@ -17,3 +17,5 @@ class ChurchDenominations(BaseModel):
     name = Column(String(150))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
+
+    church = relationship("Churches", back_populates= "church_denomination")
