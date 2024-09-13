@@ -31,7 +31,7 @@ class User(BaseModel):
     birth = Column(Date)
     phone = Column(String(20), index=True)
     address = Column(String(125), index=True)
-    gender = Column(Enum(Gender), nullable=False, default=None)
+    gender = Column(String(12))
     password = Column(String(50), nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)

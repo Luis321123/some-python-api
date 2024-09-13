@@ -1,15 +1,12 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlalchemy.dialects.postgresql import UUID
-from uuid import uuid4
-
 from sqlalchemy.orm import Session
 
 from app.core.database import get_session
-from app.schemas.church import ChurchCreate, ChurchUpdate, ChurchInD, ChurchBase
-from app.models.Churches import Churches, uuid
+from app.schemas.church import ChurchCreate, ChurchUpdate
+from app.schemas.user import User
 from app.controller.church import church as church_controller
-from app.api.deps import get_current_user, get_current_admin, get_current_is_superuser
+from app.api.deps import get_current_is_superuser
 
 router = APIRouter()
 

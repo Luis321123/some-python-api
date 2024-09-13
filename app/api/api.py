@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
 
-from app.api.endpoints import auth as router_auth
-from app.api.endpoints import church as router_church
-from app.api.endpoints import user as router_user
-
+from app.api.endpoints.auth import router as router_auth
+from app.api.endpoints.church import router as router_church
+from app.api.endpoints.user import router as router_user
 
 api_router = APIRouter()
 

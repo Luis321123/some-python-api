@@ -3,8 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session, joinedload
 
 from app.core.database import get_session
-from app.services.jwt import get_token_user
-from app.models.User import User
+from app.core.security import get_token_user
 from app.models import ChurchUsers
 
 message_not_authorised = 'Not authorised, consult an administrator'

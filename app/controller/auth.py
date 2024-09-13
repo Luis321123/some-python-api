@@ -1,14 +1,11 @@
 
 from typing import Optional
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import HTTPException
 from app.core.security import verify_password
 
-
-
 from app.models.User import User
-from app.schemas.user import User as UserSchema
 from app.schemas.user import UserCreate, UserUpdate
 from app.services.base import CRUDBase
 from app.services.jwt import _generate_tokens

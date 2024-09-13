@@ -1,6 +1,7 @@
-from datetime import datetime, Date
+from datetime import datetime
 from typing import Optional
 from pydantic import UUID4, BaseModel
+
 # Shared properties
 class ChurchUser(BaseModel):
     user_uuid: UUID4 = None
@@ -8,16 +9,13 @@ class ChurchUser(BaseModel):
     role_uuid: UUID4 | None = None
     position: str = None
     active: bool = False
-    
 
 # Properties to receive via API on creation
 class ChurchUserCreate(ChurchUser):
    pass
 
-
 class ChurchUserUpdate(ChurchUser):
     pass
-
     
 class ChurchUserInDB(ChurchUser):
     uuid: UUID4

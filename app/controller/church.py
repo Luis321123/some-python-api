@@ -1,18 +1,11 @@
-from typing import Optional
-from sqlalchemy import Session
-from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from app.core.security import verify_password
-from uuid import UUID
 
-from app.models.Churches import Churches, uuid
-from app.schemas.user import User as UserSchema
-from app.schemas.church import ChurchCreate, ChurchUpdate, ChurchBase
+from app.schemas.church import ChurchCreate, ChurchUpdate
 from app.services.base import CRUDBase
 from app.models.Churches import Churches
-from app.models.Base import BaseModel as Church_Remove
 
-class ChurchController(CRUDBase[Churches, ChurchCreate, ChurchUpdate, ChurchBase, Church_Remove]):
+class ChurchController(CRUDBase[Churches, ChurchCreate, ChurchUpdate]):
     async def get_church(self, db:Session, id: str):
         church = await db.query(self.model).filter(self.model.uuid == id).first()
         if not church:

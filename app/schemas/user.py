@@ -1,21 +1,25 @@
-from datetime import datetime, Date
+from datetime import datetime, date
 from typing import Optional
-from pydantic import UUID4, BaseModel, EmailStr, validator
+from pydantic import UUID4, BaseModel, EmailStr
+from sqlalchemy import Enum
 
+class Gender(Enum):
+    MALE = "male"
+    FEMALE = "female"
+    OTHER = "other"
 
-# Shared properties
 class UserBase(BaseModel):
-    name: str  | None= None
+    name: str = None
     last_name: str = None
-    is_superuser:bool = False
-    email: EmailStr | None= None
-    birth: Date | None = None
+    is_superuser: bool = False
+    email: EmailStr = None
+    birth: date | None = None
     phone: str = False
     address: str = False
-    city_uuid: UUID4[str] = None
-    country_uuid: UUID4[str] = None
-    avatar: UUID4[str]= None
-    gender: str = None
+    city_uuid: UUID4 = None
+    country_uuid: UUID4 = None
+    avatar: UUID4 = None
+    gender: str = None # VALIDATE FOR GENDER ENUM
 
 
 # Properties to receive via API on creation

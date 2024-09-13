@@ -1,8 +1,3 @@
-from sqlalchemy.orm import Session
-
-from datetime import datetime, timedelta
-import uvicorn
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 

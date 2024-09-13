@@ -1,6 +1,6 @@
 import os
 from functools import lru_cache
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from pathlib import Path
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
@@ -36,9 +36,9 @@ class Settings(BaseSettings):
 
     # Seeders of first user
     FIRST_ADMIN_EMAIL: str = os.environ.get("FIRST_ADMIN_EMAIL")
-    FIRST_ADMIN_PHONE: str = os.environ.get("FIRST_ADMIN_PHONE")
     FIRST_ADMIN_PASSWORD: str =  os.environ.get("FIRST_ADMIN_PASSWORD")
-    FIRST_ADMIN_ACCOUNT_NAME: str = os
+    FIRST_ADMIN_ACCOUNT_NAME: str = os.environ.get("FIRST_ADMIN_ACCOUNT_NAME")
+    FIRST_ADMIN_ACCOUNT_LASTNAME: str = os.environ.get("FIRST_ADMIN_ACCOUNT_LASTNAME")
 
     # App Secret Key
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "8deadce9449770680910741063cd0a3fe0acb62a8978661f421bbcbb66dc41f1")
