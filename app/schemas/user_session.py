@@ -7,7 +7,7 @@ class UserSessionBase(BaseModel):
     user_uuid: UUID4 = None
     church_uuid: UUID4 = None
     token: str = None
-    firebase_token: str = False
+    firebase_token: str = None
 
 # Properties to receive via API on creation
 class UserSessionCreate(UserSessionBase):

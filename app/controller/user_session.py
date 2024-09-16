@@ -7,12 +7,11 @@ from app.schemas.user_session import UserSessionCreate, UserSessionBase
 
 
 class UserSessionController(CRUDBase[UserSession, UserSessionCreate, UserSessionCreate]):
-    async def create_user_session(self, token:str, session: Session):
+    async def create_user_session(self, session: Session, obj_in: UserSessionCreate):
         try:
-            self.create(db=session, obj_in=data)
+            self.create(db=session, obj_in=obj_in)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
-
 
     async def remove_user_session(self, user_uuid:str, session: Session):
             try:
