@@ -6,6 +6,7 @@ from fastapi import HTTPException
 from app.core.security import verify_password
 
 from app.models.User import User
+from app.schemas.church_user import ChurchUserInDB
 from app.schemas.user import UserCreate, UserUpdate
 from app.services.base import CRUDBase
 from app.services.jwt import _generate_tokens
@@ -24,10 +25,19 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
                 raise ValueError("Contraseña invalida o correo electronico")
             
             response = _generate_tokens(user)
+            # INSERTAR SESSION CON ACCESS TOKEN
+            response["access_token"]
             return response
-      
       
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+   
+    async def post_logout_user(self, db:Session, church_user:ChurchUserInDB):
+        try:
+            pass
+        except Exception as ex:
+            raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+   
+
 
 auth = AuthController(User)

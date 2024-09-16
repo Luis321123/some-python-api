@@ -34,6 +34,16 @@ async def get_current_admin(request: Request, optional_token: str = Depends(oaut
         raise HTTPException(status_code=401, detail=message_not_authorised)
     return user
 
+async def get_current_church_user(request: Request, optional_token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
+    user = await get_current_user(request=request, optional_token=optional_token, db=db)
+
+    church_user = (
+            db.query(ChurchUsers)
+            .filter(ChurchUsers.user_uuid == user.uuid)
+            .first()
+    )
+
+    return church_user
 
 async def get_current_is_superuser(request: Request, optional_token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
     user = await get_current_user(request=request, optional_token=optional_token, db=db)

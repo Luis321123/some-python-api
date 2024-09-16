@@ -26,7 +26,7 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
                 position="test",
                 active=True
             )
-            await church_user_controller.create_church_user(session=session, data=obj_in_church_user)
+            await church_user_controller.create_church_user(session=session, data2212=obj_in_church_user)
 
             return user
         except Exception as e:
