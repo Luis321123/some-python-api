@@ -64,14 +64,14 @@ def init_db(db: Session) -> None:
         role_services.create(db, obj_in=admin_role_in)
 
 # Create super user admin test
-    # user_in = UserCreate(
-    #     name=settings.FIRST_ADMIN_ACCOUNT_NAME,
-    #     last_name=settings.FIRST_ADMIN_ACCOUNT_NAME,
-    #     email=settings.FIRST_ADMIN_EMAIL,
-    #     password=hash_password(settings.FIRST_ADMIN_PASSWORD),
-    #     is_superuser=True,
-    #     address="test",
-    #     phone="1241414",
-    #     gender="male"
-    # )
-    # user_controller.create(db=db, obj_in=user_in)  
+    user_in = UserCreate(
+        name=settings.FIRST_ADMIN_ACCOUNT_NAME,
+        last_name=settings.FIRST_ADMIN_ACCOUNT_NAME,
+        email=settings.FIRST_ADMIN_EMAIL,
+        password=hash_password(settings.FIRST_ADMIN_PASSWORD),
+        is_superuser=True,
+        address="test",
+        phone="1241414",
+        gender="male"
+    )
+    user_controller.create(db=db, obj_in=user_in)  

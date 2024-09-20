@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import firebase_admin
+from firebase_admin import credentials
+
 
 from app.api.api import api_router
 from app.core.settings import get_settings
@@ -29,6 +32,8 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Hi, I am sinaiapp. Awesome - Your setup is done & working."}
+    return {"message": "Hi, I am Louis - Your app is done & working."}
 
 
+cred = credentials.Certificate("app/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
