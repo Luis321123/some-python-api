@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_session
 from app.core.security import get_token_user
 from app.models import ChurchUsers
+from app.models.User import User
 
 message_not_authorised = 'Not authorised, consult an administrator'
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -39,7 +40,7 @@ async def get_current_church_user(request: Request, optional_token: str = Depend
 
     church_user = (
             db.query(ChurchUsers)
-            .filter(ChurchUsers.user_uuid == user.uuid)
+            .filter(ChurchUsers.user_uuid == User.uuid)
             .first()
     )
 

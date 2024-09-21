@@ -7,6 +7,7 @@ from firebase_admin import credentials
 from app.api.api import api_router
 from app.core.settings import get_settings
 
+
 settings = get_settings()
 
 def create_application():
@@ -34,6 +35,10 @@ app.add_middleware(
 async def root():
     return {"message": "Hi, I am Louis - Your app is done & working."}
 
+import firebase_admin
+from firebase_admin import credentials
 
 cred = credentials.Certificate("app/serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
+
+

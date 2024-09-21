@@ -15,7 +15,7 @@ async def user_login(data: OAuth2PasswordRequestForm = Depends(), session: Sessi
     data_in = await auth_controller.post_login_token(db=session, obj_in=data)
     return JSONResponse(data_in)
 
-@router.post("/logout", status_code=status.HTTP_200_OK)
+@router.put("/logout", status_code=status.HTTP_200_OK)
 async def user_logout(session: Session = Depends(get_session), church_user: ChurchUserInDB = Depends(get_current_church_user)):
    await auth_controller.post_logout_user(db=session, church_user=church_user)
    return JSONResponse(content='Has cerrado sesion')

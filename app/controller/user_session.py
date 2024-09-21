@@ -3,7 +3,7 @@ from fastapi import HTTPException
 
 from app.services.base import CRUDBase
 from app.models.UserSessions import UserSession
-from app.schemas.user_session import UserSessionCreate, UserSessionBase
+from app.schemas.user_session import UserSessionCreate
 
 
 class UserSessionController(CRUDBase[UserSession, UserSessionCreate, UserSessionCreate]):
@@ -20,3 +20,4 @@ class UserSessionController(CRUDBase[UserSession, UserSessionCreate, UserSession
                 raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
 
 user_session = UserSessionController(UserSession)
+
