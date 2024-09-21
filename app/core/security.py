@@ -1,9 +1,11 @@
-from fastapi import Depends, HTTPException
+from fastapi import Body, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordBearer
+from pydantic import EmailStr
 from sqlalchemy.orm import joinedload, Session
 
 import logging
 
+from app.models.User import User
 import jwt
 from passlib.context import CryptContext
 import base64
@@ -25,6 +27,9 @@ pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def hash_password(password: str) -> str: 
+    return pwd_context.hash(password)
+
+def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -64,21 +69,21 @@ def generate_token(payload: dict, secret: str, algo: str, expiry: timedelta):
     payload.update({"exp": expire})
     return jwt.encode(payload, secret, algorithm=algo)
 
-async def get_token_user(token: str, db):
+async def get_token_user(token: str, db= Session):
     from app.models.User import User
     payload = get_token_payload(token, settings.JWT_SECRET, settings.JWT_ALGORITHM)
     if payload: 
         user_uuid = str_decode(str(payload.get('sub')))
-        user = db.query(User).filter(User.uuid == user_uuid).first()
+        user = Session.query(User).filter(User.uuid == user_uuid).first()
         
         if user: 
             return user
     return None
 
-async def load_user(email: str, db):
+async def load_user(email: str, db= Session):
     from app.models.User import User
     try:
-        user = db.query(User).filter(User.email == email).first()
+        user = Session.query(User).filter(User.email == email).first()
     except Exception as user_exec:
         user = None
     return user

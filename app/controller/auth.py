@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi import HTTPException
+from fastapi import BackgroundTasks, HTTPException
 from app.core.security import verify_password
 
 from app.models import ChurchUsers
@@ -11,7 +11,8 @@ from app.schemas.user import UserCreate, UserUpdate
 from app.services.base import CRUDBase
 from app.controller.user_session import user_session as user_session_controller
 from app.services.jwt import _generate_tokens
-
+from app.services.email import send_password_reset_email
+from app.schemas.auth_schemas import PasswordReset
 
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
@@ -49,6 +50,29 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
                 user_session_controller.remove_user_session(session=Session, uuid=data_session.uuid)
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+        
+
+    async def forgot_password(self, email: str, db: Session, background_tasks: BackgroundTasks):
+        try:
+            user = db.query(User).filter(User.email == email).where(User.deleted_at == None).first()
+            if not user:
+                return None
+
+            await send_password_reset_email(user=user, background_tasks=background_tasks)
+        except Exception as ex:
+            raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+
+    async def reset_password(self, data: PasswordReset, db: Session):
+        try:
+            user = db.query(User).filter(User.email == data.email).where(User.deleted_at == None).first()
+            if not user:
+                return None
+            
+            await PasswordReset(token)
+        except Exception as ex:
+            raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+
+
 
 
 auth = AuthController(User)
