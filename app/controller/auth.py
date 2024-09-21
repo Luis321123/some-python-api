@@ -67,12 +67,12 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
         try:
             user = db.query(User).filter(User.email == data.email).where(User.deleted_at == None).first()
             if not user:
+                print(f"Alerta: Intento de restablecimiento de contraseña fallido para el email: {data.email}. Usuario no encontrado.")
                 return None
-            
+
             await PasswordReset()
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
-
-
-
+        
+        
 auth = AuthController(User)

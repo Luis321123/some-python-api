@@ -19,7 +19,7 @@ async def send_password_reset_email(user: User, background_tasks: BackgroundTask
     await send_email(
         recipients=[user.email],
         subject=subject,
-        template_name="password-reset.html",
+        template_name="reset-password.html",
         context=data,
         background_tasks=background_tasks
     )

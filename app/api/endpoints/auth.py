@@ -34,4 +34,4 @@ async def forgot_password(data: PasswordResetRequest, background_tasks: Backgrou
 @router.put("/reset-password", status_code=status.HTTP_200_OK)
 async def reset_password(data: PasswordReset, session: Session = Depends(get_session)):
     await auth_controller.reset_password(data=data, db=session)
-    return JSONResponse()
+    return JSONResponse(content='Se ha reiniciado su contraseña')
