@@ -14,6 +14,7 @@ from app.services.jwt import _generate_tokens
 from app.services.email import send_password_reset_email
 from app.schemas.auth_schemas import PasswordReset
 
+
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
         return db.query(self.model).filter(User.email == email).first()
@@ -68,10 +69,9 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
             if not user:
                 return None
             
-            await PasswordReset(token)
+            await PasswordReset()
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
-
 
 
 

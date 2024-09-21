@@ -36,7 +36,7 @@ class User(BaseModel):
     deleted_at = Column(DateTime, nullable=True, default=None)
 
     def get_context_string(self, context: str):
-        return f"{context}{self.password[-6:]}{self.create_at.strftime('%m%d%Y%H%M%S')}".strip()
+        return f"{context}{self.password[-6:]}{self.created_at.strftime('%m%d%Y%H%M%S')}".strip()
     
     #RELEACIONES
 

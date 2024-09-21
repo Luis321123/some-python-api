@@ -29,7 +29,7 @@ async def user_logout(session: Session = Depends(get_session), church_user: Chur
 @router.post("/forgot-password", status_code=status.HTTP_200_OK)
 async def forgot_password(data: PasswordResetRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_session)):
     await auth_controller.forgot_password(email=data.email, db=db, background_tasks=background_tasks)
-    return JSONResponse(content='Has cerrado sesion')
+    return JSONResponse(content='Se ha enviado un correo de verificacion a su gmail')
 
 @router.put("/reset-password", status_code=status.HTTP_200_OK)
 async def reset_password(data: PasswordReset, session: Session = Depends(get_session)):
