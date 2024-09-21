@@ -63,16 +63,26 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
 
-    async def reset_password(self, data: PasswordReset, db: Session):
+    async def reset_password(self, obj_in: PasswordReset, db: Session):
         try:
-            user = db.query(User).filter(User.email == data.email).where(User.deleted_at == None).first()
+            user = await self.get_by_email(db=db, email=obj_in.email)
             if not user:
-                print(f"Alerta: Intento de restablecimiento de contraseña fallido para el email: {data.email}. Usuario no encontrado.")
-                return None
-
-            await PasswordReset()
+                raise HTTPException(status_code=404, detail="User not found in system")
+            
+            user_token = user.get_context_string(context=FORGOT_PASSWORD)
+            token_valid = verify_password(user_token, obj_in.token)
+            if not token_valid:
+                raise HTTPException(status_code=400, detail="Invalid token, it may be expired")
+            
+            data_user = {"password": verify_password(obj_in.password)}
+            self.update(db=db, db_obj=user, obj_in=data_user)
+      
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+        
+
+        
+        
         
         
 auth = AuthController(User)
