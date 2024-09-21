@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import BackgroundTasks, HTTPException
-from app.core.security import verify_password
+from app.core.security import hash_password, verify_password
 
 from app.models import ChurchUsers
 from app.models.User import User
@@ -14,7 +14,7 @@ from app.services.jwt import _generate_tokens
 from app.services.email import send_password_reset_email
 from app.schemas.auth_schemas import PasswordReset
 
-
+FORGOT_PASSWORD = "forgot_password"
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
         return db.query(self.model).filter(User.email == email).first()
@@ -67,22 +67,21 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
         try:
             user = await self.get_by_email(db=db, email=obj_in.email)
             if not user:
-                raise HTTPException(status_code=404, detail="User not found in system")
-            
-            user_token = user.get_context_string(context=FORGOT_PASSWORD)
+                raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+            user_token = user.get_context_string(context="PASSWORD-TEST")
             token_valid = verify_password(user_token, obj_in.token)
             if not token_valid:
-                raise HTTPException(status_code=400, detail="Invalid token, it may be expired")
+                raise HTTPException(status_code=400, detail="Token invalido, ya ha expirado")
             
-            data_user = {"password": verify_password(obj_in.password)}
+            
+            data_user = {"password": hash_password(obj_in.password)}
             self.update(db=db, db_obj=user, obj_in=data_user)
-      
-        except Exception as ex:
-            raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
-        
 
-        
-        
-        
+            return {"message": "La contraseña ya ha sido cambiada."}
+
+        except Exception as ex:
+            raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
+    
         
 auth = AuthController(User)
