@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
+
 from app.api.deps import get_current_church_user
 from app.core.database import get_session
 from app.controller.auth import auth as auth_controller

@@ -6,7 +6,16 @@ from firebase_admin import credentials
 
 from app.api.api import api_router
 from app.core.settings import get_settings
+import pyrebase
 
+config = {
+  "apiKey": "apiKey",
+  "authDomain": "firebase-adminsdk-w9a5t@sinai-app-iglesias.iam.gserviceaccount.com",
+  "databaseURL": "https://databaseName.firebaseio.com",
+  "storageBucket": "projectId.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
 
 settings = get_settings()
 

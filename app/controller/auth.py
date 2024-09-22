@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import BackgroundTasks, HTTPException
 from app.core.security import hash_password, verify_password
 
+from app.main import firebase 
 from app.models import ChurchUsers
 from app.models.User import User
 from app.models.UserSessions import UserSession
@@ -14,12 +15,13 @@ from app.services.jwt import _generate_tokens
 from app.services.email import send_password_reset_email
 from app.schemas.auth_schemas import PasswordReset
 
-FORGOT_PASSWORD = "forgot_password"
+auth_firebase = firebase.auth()
+
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
         return db.query(self.model).filter(User.email == email).first()
     
-    async def post_login_token(self, db:Session, obj_in: OAuth2PasswordRequestForm):
+    async def post_login_token(self,db:Session, obj_in: OAuth2PasswordRequestForm):
         try:
             user = await self.get_by_email(db=db, email=obj_in.username)
             
@@ -29,9 +31,8 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
                 raise ValueError("Contraseña invalida o correo electronico")
             
             response = _generate_tokens(user)
-                
-            # INSERTAR SESSION CON ACCESS TOKEN
             church_user = db.query(ChurchUsers).filter(ChurchUsers.user_uuid == user.uuid).first()
+            
             if church_user:
                 db_obj_in = {
                     "user_uuid": church_user.user_uuid,

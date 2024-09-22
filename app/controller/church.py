@@ -14,7 +14,6 @@ class ChurchController(CRUDBase[Churches, ChurchCreate, ChurchUpdate]):
 
     async def update_church(self, data: ChurchUpdate, church_id: str, session: Session):
         try:
-            # obtener modelo
             church_current = await self.get_church(db=session, id=church_id)
             
             self.update(db=session, db_obj=church_current, obj_in=data)
