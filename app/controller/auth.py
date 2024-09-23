@@ -1,9 +1,11 @@
+
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import BackgroundTasks, HTTPException
 from app.core.security import hash_password, verify_password
 
-from app.main import firebase 
+
+from app.core.firebase_config import firebase
 from app.models import ChurchUsers
 from app.models.User import User
 from app.models.UserSessions import UserSession
@@ -15,7 +17,6 @@ from app.services.jwt import _generate_tokens
 from app.services.email import send_password_reset_email
 from app.schemas.auth_schemas import PasswordReset
 
-auth_firebase = firebase.auth()
 
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
@@ -23,27 +24,36 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     
     async def post_login_token(self,db:Session, obj_in: OAuth2PasswordRequestForm):
         try:
+       
+            auth = firebase.auth()
             user = await self.get_by_email(db=db, email=obj_in.username)
             
             if not user:
                 raise ValueError("El correo electronico no está registrado con nosotros")
+           
             if not verify_password(obj_in.password, user.password):
                 raise ValueError("Contraseña invalida o correo electronico")
             
+            user_data = auth.sign_in_with_email_and_password(obj_in.username, obj_in.password)
             response = _generate_tokens(user)
-            church_user = db.query(ChurchUsers).filter(ChurchUsers.user_uuid == user.uuid).first()
             
+            church_user = db.query(ChurchUsers).filter(ChurchUsers.user_uuid == user.uuid).first()
             if church_user:
                 db_obj_in = {
                     "user_uuid": church_user.user_uuid,
                     "church_uuid": church_user.church_uuid,
                     "token": response.get("access_token"),
-                    "firebase_token": None
+                    "firebase_token": user_data['idToken']
                 }
                 await user_session_controller.create_user_session(session=db, obj_in=db_obj_in)
             return response
         except Exception as ex:
-            raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
+            if "user not found" in str(ex).lower():
+                raise HTTPException(status_code=404, detail="Usuario no encontrado en Firebase.")
+            elif "invalid password" in str(ex).lower():
+                raise HTTPException(status_code=401, detail="Contraseña inválida.")
+            else:
+                raise HTTPException(status_code=500, detail=f"Error en el inicio de sesión: {str(ex)}")
    
     async def post_logout_user(self, db: Session, church_user: ChurchUserInDB):
         try:

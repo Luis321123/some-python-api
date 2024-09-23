@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
+from app.core.firebase_config import firebase
 from app.core.security import hash_password, is_password_strong_enough
 from app.schemas.church_user import ChurchUserCreate
 from app.models.User import User
@@ -26,6 +27,8 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
                 position="test",
                 active=True
             )
+            auth = firebase.auth()
+            auth.create_user_with_email_and_password(user.email, user.password)
             await church_user_controller.create_church_user(session=session, data=obj_in_church_user)
 
             return user

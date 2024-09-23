@@ -1,23 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import firebase_admin
-from firebase_admin import credentials
-
-
+import pyrebase
+from app.core.firebase_config import config
 from app.api.api import api_router
 from app.core.settings import get_settings
-import pyrebase
-
-config = {
-  "apiKey": "apiKey",
-  "authDomain": "firebase-adminsdk-w9a5t@sinai-app-iglesias.iam.gserviceaccount.com",
-  "databaseURL": "https://databaseName.firebaseio.com",
-  "storageBucket": "projectId.appspot.com"
-}
-
-firebase = pyrebase.initialize_app(config)
+from app.core.firebase_config import firebase
 
 settings = get_settings()
+
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
 
 def create_application():
     application = FastAPI(title=settings.APP_NAME,
@@ -44,10 +36,5 @@ app.add_middleware(
 async def root():
     return {"message": "Hi, I am Louis - Your app is done & working."}
 
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate("app/serviceAccountKey.json")
-firebase_admin.initialize_app(cred)
 
 

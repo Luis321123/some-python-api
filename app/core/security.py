@@ -1,11 +1,7 @@
-from fastapi import Body, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordBearer
-from pydantic import EmailStr
-from sqlalchemy.orm import joinedload, Session
+from sqlalchemy.orm import Session
 
 import logging
-
-from app.models.User import User
 import jwt
 from passlib.context import CryptContext
 import base64
@@ -71,7 +67,7 @@ async def get_token_user(token: str, db= Session):
     payload = get_token_payload(token, settings.JWT_SECRET, settings.JWT_ALGORITHM)
     if payload: 
         user_uuid = str_decode(str(payload.get('sub')))
-        user = Session.query(User).filter(User.uuid == user_uuid).first()
+        user = db.query(User).filter(User.uuid == user_uuid).first()
         
         if user: 
             return user

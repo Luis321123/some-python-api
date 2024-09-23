@@ -43,6 +43,21 @@ class Settings(BaseSettings):
     # App Secret Key
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "8deadce9449770680910741063cd0a3fe0acb62a8978661f421bbcbb66dc41f1")
 
+    # aws settings
+    QUEUE_CONNECTION=sqs
+    SQS_ACCESS_KEY_ID=AKIATNMXPK5RSZK2P2CR
+    SQS_SECRET_ACCESS_KEY=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
+    SQS_DEFAULT_REGION=us-east-1
+    SQS_PREFIX=https://sqs.us-east-1.amazonaws.com/234930263907
+    SQS_QUEUE=sqs-zkool
+    RUTA_SQS=https://sqs.us-east-1.amazonaws.com/234930263907/sqs-zkool
+    AWS_ACCESS_KEY_ID=AKIAZDZZ5KHX27VQJ26V
+    AWS_SECRET_ACCESS_KEY=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
+    AWS_DEFAULT_REGION=sa-east-1
+    AWS_BUCKET=dev.sinai.app
+    AWS_URL=https://s3.sa-east-1.amazonaws.com/dev.sinai.app
+    AWS_USE_PATH_STYLE_ENDPOINT=false
+
 
 
 @lru_cache()
