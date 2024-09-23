@@ -1,0 +1,18 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      variables:
+          CI_AWS_ECS_CLUSTER: "clusterBuinvecino"
+          CI_AWS_ECS_SERVICE: "backendsinai"
+          CI_AWS_ECS_TASK_DEFINITION: "backendsinai"
+          ENV_DEPLOY: "$ENV"
+
+default:
+  before_script:
+    - echo "$ENV_DEPLOY" > .env
+
+include:
+  - template: AWS/Deploy-ECS.gitlab-ci.yml
+    only:
+      refs:
+        - main

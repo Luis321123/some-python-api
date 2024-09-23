@@ -1,7 +1,7 @@
-FROM python:3.11
+FROM python:3.12
 
 # set work directory
-WORKDIR /app/
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN useradd -rm -d /code -s /bin/bash -g root -G sudo -u 1001 ubuntu
 
-COPY ./startup.sh /app/
+COPY ./startup.sh /app/startup.sh
 
 RUN chmod +x /app/startup.sh
 

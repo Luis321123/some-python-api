@@ -1,0 +1,11 @@
+Correr de los modelos a las migraciones con alembic
+
+docker-compose run fastapi-service /bin/sh -c "alembic revision --autogenerate"
+
+Subir migraciones desde el backend a la BD
+
+docker-compose run fastapi-service /bin/sh -c "alembic upgrade head"
+
+Revertir subida
+
+docker-compose run fastapi-service /bin/sh -c "alembic downgrade -1"
