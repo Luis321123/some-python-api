@@ -24,4 +24,6 @@ class Cities(BaseModel):
 #RELEACIONES
 
     user = relationship("User",back_populates="cities")
+    regions = relationship("Regions", back_populates="cities")
+    churches = relationship("Churches", back_populates= "cities")
     

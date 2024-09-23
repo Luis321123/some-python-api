@@ -21,3 +21,4 @@ class Countries(BaseModel):
     #RELEACIONES
 
     user = relationship("User", back_populates="countries")
+    regions = relationship("Countries", back_populates="regions", uselist=False)

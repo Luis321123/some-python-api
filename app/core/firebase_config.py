@@ -4,7 +4,7 @@ import pyrebase
 config = {
     "apiKey": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBUDv0iLSP0T5wzrdiLlbtm9Tbo8B0oXG4",
     "authDomain": "sinai-app-iglesias.firebaseapp.com",
-    "databaseURL": "https://sinai-app-iglesias.firebaseio.com",
+    "databaseURL": "https://sinai-app-iglesias-default-rtdb.firebaseio.com/",
     "storageBucket": "sinai-app-iglesias.appspot.com"
 }
 

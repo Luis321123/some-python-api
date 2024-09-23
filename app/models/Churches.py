@@ -27,3 +27,5 @@ class Churches(BaseModel):
     church_user = relationship("ChurchUsers", back_populates= "church")
     church_denomination = relationship("ChurchDenominations", back_populates= "church", uselist=False)
     post = relationship("Posts", back_populates= "church")
+    user_session = relationship("UserSession", back_populates="churches")
+    cities = relationship("Cities", back_populates= "churches", uselist= False)

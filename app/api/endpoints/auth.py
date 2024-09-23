@@ -36,3 +36,18 @@ async def forgot_password(data: PasswordResetRequest, background_tasks: Backgrou
 async def reset_password(obj_in: PasswordReset, session: Session = Depends(get_session)):
     await auth_controller.reset_password(obj_in=obj_in, db=session)
     return JSONResponse(content='Se ha reiniciado su contraseña')
+
+
+
+
+@router.get('/checkout-google',status_code=status.HTTP_200_OK)
+async def get_link_google_auth():
+    current_session = await auth_controller.get_link_google_auth()
+    return current_session
+
+
+
+@router.post('/login-google', status_code=status.HTTP_200_OK)
+async def user_login(data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
+    data_in = await auth_controller.post_login_token(db=session, obj_in=data)
+    return JSONResponse(data_in)

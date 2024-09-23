@@ -22,3 +22,4 @@ class UserSession(BaseModel):
 
     #RELEACIONES
     user = relationship("User", back_populates="user_session", uselist=False)
+    churches = relationship("Churches", back_populates="user_session", uselist=False)
