@@ -43,6 +43,22 @@ class Settings(BaseSettings):
     # App Secret Key
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "8deadce9449770680910741063cd0a3fe0acb62a8978661f421bbcbb66dc41f1")
 
+    # aws settings
+    QUEUE_CONNECTION: str = os.environ.get("QUEUE_CONNECTION")
+    SQS_ACCESS_KEY_ID: str = os.environ.get("SQS_ACCESS_KEY_ID")
+    SQS_SECRET_ACCESS_KEY: str = os.environ.get("SQS_SECRET_ACCESS_KEY")
+    SQS_DEFAULT_REGION: str = os.environ.get("SQS_DEFAULT_REGION")
+    SQS_PREFIX: str = os.environ.get("SQS_PREFIX")
+    SQS_QUEUE: str = os.environ.get("SQS_QUEUE")
+    RUTA_SQS: str = os.environ.get("RUTA_SQS")
+    AWS_ACCESS_KEY_ID: str = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY: str = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_DEFAULT_REGION: str = os.environ.get("AWS_DEFAULT_REGION")
+    AWS_BUCKET: str = os.environ.get("AWS_BUCKET")
+    AWS_URL: str = os.environ.get("AWS_URL")
+    AWS_USE_PATH_STYLE_ENDPOINT: str = os.environ.get("AWS_USE_PATH_STYLE_ENDPOINT")
+
+
 
 @lru_cache()
 def get_settings() -> Settings:
