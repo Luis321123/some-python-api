@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from datetime import datetime, timedelta
+from datetime import  timedelta
 
 import logging
 
@@ -40,7 +40,6 @@ def _generate_tokens(user):
              'a': access_key
         }
         refresh_token = generate_token(rt_payload, settings.SECRET_KEY, settings.JWT_ALGORITHM, rt_expires)
-        #ADD SET ??
         
         return {
             "access_token": access_token,
@@ -54,9 +53,12 @@ async def get_refresh_token(refresh_token, db):
     
     token_payload = get_token_payload(refresh_token, settings.SECRET_KEY, settings.JWT_ALGORITHM)
     if not token_payload:
-        raise HTTPException(status_code=404, detail="Invaluuid Request")
+        raise HTTPException(status_code=400, detail="Invalid refresh token")
 
     user_uuid = str_decode(str(token_payload.get('sub')))
     user = db.query(User).filter(User.uuid == user_uuid).first()
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
 
     return _generate_tokens(user)

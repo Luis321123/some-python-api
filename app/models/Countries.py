@@ -3,7 +3,6 @@ from sqlalchemy import Column, DateTime, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from app.core.database import Base
 from app.models.BaseModel import BaseModel
 
 class Countries(BaseModel):
@@ -21,4 +20,4 @@ class Countries(BaseModel):
     #RELEACIONES
 
     user = relationship("User", back_populates="countries")
-    regions = relationship("Countries", back_populates="regions", uselist=False)
+    regions = relationship("Regions", back_populates="countries")

@@ -18,6 +18,8 @@ COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
+RUN pip install --no-cache-dir setuptools
+
 USER ubuntu
 
 EXPOSE 8000

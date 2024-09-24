@@ -1,10 +1,9 @@
 
 from uuid import uuid4
-from sqlalchemy import Column, DateTime, String, func
+from sqlalchemy import Column, DateTime, ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from app.core.database import Base
 from app.models.BaseModel import BaseModel
 
 class Regions(BaseModel):
@@ -13,7 +12,8 @@ class Regions(BaseModel):
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
-
+    
+    country_uuid = Column(UUID(200), ForeignKey('countries.uuid'))
 
     name = Column(String(125))
     

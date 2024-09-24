@@ -59,7 +59,7 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
         try:
             data_session = db.query(UserSession).filter(UserSession.deleted_at == None, UserSession.church_uuid == church_user.church_uuid, UserSession.user_uuid == church_user.user_uuid).first()
             if data_session:
-                user_session_controller.remove_user_session(session=Session, uuid=data_session.uuid)
+                user_session_controller.remove_user_session(session=Session, user_uuid=data_session.uuid)
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(ex)}")
         
@@ -106,3 +106,4 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     
         
 auth = AuthController(User)
+    

@@ -13,8 +13,9 @@ class Churches(BaseModel):
     uuid = Column(
         UUID(150), primary_key=True,  index=True, default=uuid4
     )
-
     church_denomination_uuid = Column(UUID(200), ForeignKey('church_denominations.uuid'))
+    cities_uuid = Column(UUID(150), ForeignKey('cities.uuid'), index=True)
+   
     name = Column(String(150))
     fullname = Column(String(200), unique=True, index=True)
     city_uuid = Column(UUID(150), index=True)

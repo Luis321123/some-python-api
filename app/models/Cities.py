@@ -16,6 +16,7 @@ class Cities(BaseModel):
 
     region_uuid = Column(UUID(150), ForeignKey('regions.uuid'), index=True)
    
+   
     name = Column(String(120))
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
