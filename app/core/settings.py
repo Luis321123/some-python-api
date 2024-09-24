@@ -58,8 +58,6 @@ class Settings(BaseSettings):
     AWS_URL: str = os.environ.get("AWS_URL")
     AWS_USE_PATH_STYLE_ENDPOINT: str = os.environ.get("AWS_USE_PATH_STYLE_ENDPOINT")
 
-
-
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()

@@ -21,7 +21,6 @@ class UserBase(BaseModel):
     avatar: Optional[UUID4] = None   
     gender: str = None # VALIDATE FOR GENDER ENUM
 
-
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     password: str

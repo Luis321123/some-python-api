@@ -7,8 +7,6 @@ from passlib.context import CryptContext
 import base64
 
 from datetime import datetime, timedelta
-
-from app.core.database import get_session
 from app.core.settings import get_settings
 
 

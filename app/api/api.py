@@ -7,8 +7,6 @@ from app.api.endpoints.debug import router as router_debug
 from app.api.endpoints.health_check import router as router_check
 from app.api.deps import get_current_user, get_current_is_superuser
 
-
-
 api_router = APIRouter()
 
 api_router.include_router(router_auth, prefix="/auth", tags=["Auth"],

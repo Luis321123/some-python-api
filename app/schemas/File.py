@@ -2,8 +2,6 @@ from datetime import datetime
 from typing import Optional
 from pydantic import UUID4, BaseModel
 
- 
-
 class FileBase(BaseModel):
     name: str = None
     path: str = None
@@ -11,7 +9,6 @@ class FileBase(BaseModel):
     size: int = None
     folder: str = None
     active: bool = False 
-
 
 # Properties to receive via API on creation
 class FileSave(FileBase):
@@ -29,5 +26,5 @@ class FileInDBBase(FileBase):
         from_attributes = True
 
 # Additional properties to return via API
-class User(UserInDB):
+class User(FileInDBBase):
     pass

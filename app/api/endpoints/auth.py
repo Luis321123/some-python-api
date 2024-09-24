@@ -10,7 +10,6 @@ from app.controller.auth import auth as auth_controller
 from app.schemas.auth_schemas import PasswordResetRequest, PasswordReset
 from app.schemas.church_user import ChurchUserInDB
 
-
 router=APIRouter()
 
 @router.post('/login', status_code=status.HTTP_200_OK)
