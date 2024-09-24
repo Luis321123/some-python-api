@@ -8,8 +8,6 @@ from app.controller.church_user import church_user
 
 router = APIRouter()
 
-
-
 @router.post("/create/", response_model=ChurchUserCreate, status_code=status.HTTP_201_CREATED)
 async def create_church_user(user: ChurchUserCreate, session: Session = Depends(get_session)):
     new_user = await church_user.create_church_user(data=user, session=session)
