@@ -7,6 +7,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+COPY ./.env /app/.env
+
 RUN useradd -rm -d /code -s /bin/bash -g root -G sudo -u 1001 ubuntu
 
 COPY ./startup.sh /app/startup.sh
