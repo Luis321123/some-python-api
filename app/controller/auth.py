@@ -93,7 +93,16 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
 
         except Exception as ex:
             raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
-    
+        
+        
+    async def get_link_google_auth(self):
+        try:
+            auth = firebase.Auth()       
+            provider = auth.sign_in_with_email_and_password()
+            google_login_link = provider.get("providerData")[0]["email"]
+            return {"google_login_link": google_login_link}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
         
 auth = AuthController(User)
     

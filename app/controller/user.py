@@ -16,6 +16,8 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
             print(data.password)
             if not is_password_strong_enough(data.password):
                 raise HTTPException(status_code=400, detail="Please provide a strong password.")
+            auth = firebase.auth()
+            auth.create_user_with_email_and_password(data.email, data.password)
             data.password = hash_password(data.password)
             data.is_superuser = False
             user = self.create(db=session, obj_in=data)
@@ -27,8 +29,6 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
                 position="test",
                 active=True
             )
-            auth = firebase.auth()
-            auth.create_user_with_email_and_password(user.email, user.password)
             await church_user_controller.create_church_user(session=session, data=obj_in_church_user)
 
             return user

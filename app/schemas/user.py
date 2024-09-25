@@ -19,8 +19,8 @@ class UserBase(BaseModel):
     city_uuid: Optional[UUID4] = None   
     country_uuid: Optional[UUID4] = None   
     avatar: Optional[UUID4] = None   
-    gender: str = None # VALIDATE FOR GENDER ENUM
-
+    gender: str = None 
+    
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     password: str

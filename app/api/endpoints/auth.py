@@ -40,3 +40,9 @@ async def reset_password(obj_in: PasswordReset, session: Session = Depends(get_s
 async def user_login(data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
     data_in = await auth_controller.post_login_token(db=session, obj_in=data)
     return JSONResponse(data_in)
+
+
+@router.get('/checkout-google',status_code=status.HTTP_200_OK)
+async def get_link_google_auth():
+    current_session = await auth_controller.get_link_google_auth()
+    return current_session
