@@ -1,15 +1,19 @@
 
 import pyrebase
 
-config = {
+from app.core.settings import get_settings
 
-     "apiKey": "AIzaSyBUDv0iLSP0T5wzrdiLlbtm9Tbo8B0oXG4",
-    "authDomain": "sinai-app-iglesias.firebaseapp.com",
-    "databaseURL": "https://sinai-app-iglesias-default-rtdb.firebaseio.com/",
-    "projectId": "sinai-app-iglesias",
-    "storageBucket": "gs://sinai-app-iglesias.appspot.com",
-    "messagingSenderId": "129026009710",
-    "appId": "1:129026009710:android:388a3346fad67a22af147f"}
+settings = get_settings()
+
+config = {
+    "apiKey": settings.FIREBASE_API_KEY,
+    "authDomain": settings.FIREBASE_AUTH_DOMAIN,
+    "databaseURL": settings.FIREBASE_DATABASE_URL,
+    "projectId": settings.FIREBASE_PROJECT_ID,
+    "storageBucket": settings.FIREBASE_STORAGE_BUCKET,
+    "messagingSenderId": settings.FIREBASE_MESSAGING,
+    "appId": settings.FIREBASE_APP_ID
+    }
     
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()

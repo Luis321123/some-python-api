@@ -58,6 +58,15 @@ class Settings(BaseSettings):
     AWS_URL: str = os.environ.get("AWS_URL")
     AWS_USE_PATH_STYLE_ENDPOINT: str = os.environ.get("AWS_USE_PATH_STYLE_ENDPOINT")
 
+    # firebase settings
+    FIREBASE_API_KEY: str = os.environ.get("FIREBASE_API_KEY")
+    FIREBASE_AUTH_DOMAIN: str = os.environ.get("FIREBASE_AUTH_DOMAIN")
+    FIREBASE_DATABASE_URL: str = os.environ.get("FIREBASE_DATABASE_URL")
+    FIREBASE_PROJECT_ID: str = os.environ.get("FIREBASE_PROJECT_ID")
+    FIREBASE_STORAGE_BUCKET: str = os.environ.get("FIREBASE_STORAGE_BUCKET")
+    FIREBASE_MESSAGING: str = os.environ.get("FIREBASE_MESSAGING")
+    FIREBASE_APP_ID: str = os.environ.get("FIREBASE_APP_ID")
+
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()

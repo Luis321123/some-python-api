@@ -9,7 +9,7 @@ from app.core.firebase_config import firebase
 settings = get_settings()
 
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
+auth = firebase.auth() # ?
 
 def create_application():
     application = FastAPI(title=settings.APP_NAME,
