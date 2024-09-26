@@ -10,9 +10,9 @@ from app.api.deps import get_current_is_superuser
 
 router = APIRouter()
 
-@router.get('/me/{id}',status_code=status.HTTP_200_OK)
-async def get_church(id: str, session: Session = Depends(get_session)):
-    church_current = await church_controller.get_church(db=session, id=id)
+@router.get('/me/{church_uuid}',status_code=status.HTTP_200_OK)
+async def get_church(church_uuid: str, session: Session = Depends(get_session)):
+    church_current = await church_controller.get_church(db=session, id=church_uuid)
     return church_current
 
 @router.post('/create', status_code=status.HTTP_201_CREATED)

@@ -6,7 +6,7 @@ from app.schemas.church_user import ChurchUserCreate, ChurchUserUpdate
 from app.models.ChurchUsers import ChurchUsers
 from app.schemas.church_user import ChurchUserCreate
 
-class ChurchUserController(CRUDBase[ChurchUsers, ChurchUserCreate, ChurchUserUpdate]):
+class ChurchUserController(CRUDBase[ChurchUsers, ChurchUserCreate, ChurchUserUpdate,]):
     async def create_church_user(self, data: ChurchUserCreate, session: Session):
         try:
             self.create(db=session, obj_in=data)

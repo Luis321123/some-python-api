@@ -26,5 +26,5 @@ class FileInDBBase(FileBase):
         from_attributes = True
 
 # Additional properties to return via API
-class User(FileInDBBase):
+class File(FileInDBBase):
     pass

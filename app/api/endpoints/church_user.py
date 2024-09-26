@@ -28,8 +28,8 @@ async def update_church_user_session(user_uuid: str, data: ChurchUserUpdate, ses
     await church_user.update_church_user(user_uuid=user_uuid, data=data, db=session)
     return JSONResponse({'message': 'updated'})
 
-@router.delete("/delete/{user_uuid}", status_code=status.HTTP_200_OK)
-async def delete_church_user(user_uuid: str, session: Session = Depends(get_session)):
-    await church_user.delete_church_user(user_uuid=user_uuid, session=session)
+@router.delete("/delete/{church_user_uuid}", status_code=status.HTTP_200_OK)
+async def delete_church_user(church_user_uuid: str, session: Session = Depends(get_session)):
+    await church_user.delete_church_user(user_uuid=church_user_uuid, session=session)
     return JSONResponse({'message': 'Deleted'})
 
