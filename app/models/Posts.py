@@ -3,7 +3,6 @@ from sqlalchemy import Column, DateTime, String, func, Text, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
-from app.core.database import Base
 from app.models.BaseModel import BaseModel
 
 
@@ -21,5 +20,7 @@ class Posts(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 
+    # RELACIONES
+    
     post_files = relationship("PostsFiles", back_populates="post")
     church = relationship("Churches", back_populates= "post")

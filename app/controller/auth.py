@@ -3,11 +3,10 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import BackgroundTasks, HTTPException
 from app.core.security import hash_password, verify_password
-from google.oauth2 import id_token
-from google.auth.transport import requests
 
+#from firebase_admin import auth
+#from app.schemas import ProviderAuth
 
-from app.schemas import ProviderAuth
 from app.core.firebase_config import firebase
 from app.models import ChurchUsers
 from app.models.User import User
@@ -108,13 +107,15 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
         
         
-    async def login_with_google(data_token: ProviderAuth):
-        try:
-            auth = firebase.auth()    
-            decoded_token = auth.verify_id_token(data_token.token)
-            uid = decoded_token['uid']
-            return {"message": "Has iniciado sesión correctamente", "uid": uid}
-        except Exception as ex:
-            raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
+    #async def login_with_google(data_token: ProviderAuth):
+        #try:
+           # auth = firebase.auth()    
+           # decoded_token = auth.verify_id_token(data_token.token)
+           # uid = decoded_token['uid']
+           # return {"message": "Has iniciado sesión correctamente", "uid": uid}
+        #except Exception as ex:
+            #raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
+
 
 auth = AuthController(User)
+

@@ -4,18 +4,24 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from fastapi import APIRouter
-from app.schemas.ProviderAuth import ProviderAuth
-from google.auth.transport import requests
-from google.oauth2 import id_token
 
-from app.core.firebase_config import auth
+#from app.schemas.ProviderAuth import ProviderAuth
+#from google.auth.transport import requests
+#from google.oauth2 import id_token
+
 from app.api.deps import get_current_church_user
 from app.core.database import get_session
 from app.controller.auth import auth as auth_controller
-
-
+from firebase_admin import auth
 from app.schemas.auth_schemas import PasswordResetRequest, PasswordReset
 from app.schemas.church_user import ChurchUserInDB
+
+
+import firebase_admin
+from firebase_admin import credentials
+cred = credentials.Certificate('app/serviceAccountKey.json')
+firebase_admin.initialize_app(cred)
+
 
 router=APIRouter()
 
@@ -47,26 +53,40 @@ async def get_link_google_auth():
     return current_session
 
 
-@router.post("/login/google")
-async def login_with_google(data: ProviderAuth):
-    try:
+#@router.post("/login/google")
+#async def login_with_google(data: ProviderAuth):
+    #try:
         # Crea una instancia de Request
-        request_instance = requests.Request()  
+        #request_instance = requests.Request()  
         
         # Verifica el token de ID recibido
-        decoded_token = id_token.verify_oauth2_token(data.token, request_instance, '129026009710-ru12epb07jd2h3emdpvl3ov3qphohgfl.apps.googleusercontent.com')  # Asegúrate de usar el CLIENT_ID correcto
-        uid = decoded_token['sub']  # 'sub' contiene el UID del usuario
-        return {"message": "Has iniciado sesión correctamente", "uid": uid}
-    except Exception as ex:
-        raise HTTPException(status_code=500, detail=f"Error al autenticar: {str(ex)}")
+       # decoded_token = id_token.verify_oauth2_token(data.token, request_instance, '129026009710-ru12epb07jd2h3emdpvl3ov3qphohgfl.apps.googleusercontent.com')  # Asegúrate de usar el CLIENT_ID correcto
+       # uid = decoded_token['sub']  # 'sub' contiene el UID del usuario
+        #return {"message": "Has iniciado sesión correctamente", "uid": uid}
+    #except Exception as ex:
+        #raise HTTPException(status_code=500, detail=f"Error al autenticar: {str(ex)}")
    
-    except ValueError as ve:
+   # except ValueError as ve:
         # Captura errores de valor, como un token inválido
-        raise HTTPException(status_code=400, detail=f"Error de valor: {str(ve)}")
+        #raise HTTPException(status_code=400, detail=f"Error de valor: {str(ve)}")
     
-    except Exception as ex:
+    #except Exception as ex:
         # Captura cualquier otro tipo de excepción
-        raise HTTPException(status_code=500, detail=f"Error al autenticar: {str(ex)}")
+       # raise HTTPException(status_code=500, detail=f"Error al autenticar: {str(ex)}")
 
 
+#login con google
+async def verify_google_token(google_token):
+    decoded_token = auth.verify_id_token(google_token)
+    uid = decoded_token['uid']
+    return uid
    
+@router.post("/login/google",status_code=status.HTTP_200_OK)
+async def login_with_google(google_token: str):
+    try:
+        uid = verify_google_token(google_token)
+        return {"message": "Inicio de sesión exitoso", "uid": uid}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Token inválido")
+                                                #login con google
+    

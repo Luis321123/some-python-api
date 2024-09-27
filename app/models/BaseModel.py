@@ -15,3 +15,6 @@ class BaseModel(Base):
         
     def soft_delete(self):
         self.deleted_at = func.now()
+        
+        
+        #Esto posibilita hacer soft delete

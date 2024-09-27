@@ -1,9 +1,7 @@
-from datetime import date, datetime
 from sqlalchemy.orm import Session
 
 from app.core.settings import get_settings
 from app.core.security import hash_password
-from app.controller.auth import auth
 from app.models import Cities, Regions
 from app.models.Countries import Countries
 from app.schemas.user import UserCreate

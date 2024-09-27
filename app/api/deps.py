@@ -10,6 +10,9 @@ from app.models.User import User
 message_not_authorised = 'Not authorised, consult an administrator'
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
+
+
+
 async def get_current_user(request: Request, optional_token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)):
     token = request.cookies.get('access_token')
     if token:

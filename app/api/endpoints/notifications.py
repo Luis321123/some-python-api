@@ -4,25 +4,14 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_session
 from app.controller.notifications import send_notification
+
+
 router = APIRouter()
 
-notification_controller = NotificationController()
-
-@router.post("/notifications")
-async def create_notification(notification: NotificationCreate, db: Session = Depends(get_session)):
-    return notification_controller.send_notification(
-        title=notification.title,
-        content=notification.content,
-        image=notification.image,
-        token=notification.token,
-        data=notification.data
-    )
 
 
+@router.post("/notifications", status_code=status.HTTP_201_CREATED)
+async def create_notification(title: str, content: str, image: str, token: str, data: dict = None, db: Session = Depends(get_session)):
+    await send_notification(title, content, image, token, data)
+    return JSONResponse({'message': 'created'})
 
-
-
-#@router.get("/get/{user_uuid}", status_code=status.HTTP_200_OK)
-#async def get_church_user_session(user_uuid: str, session: Session = Depends(get_session)):
-    #church_user_get = await church_user.get_church_user(user_uuid=user_uuid, db=session)
-    #return church_user_get

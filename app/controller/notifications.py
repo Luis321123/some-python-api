@@ -3,8 +3,6 @@ import firebase_admin
 from firebase_admin import credentials, messaging
 from app.core.firebase_config import config
 
-
-
 cred = credentials.Certificate(config)
 firebase_admin.initialize_app(cred)
 

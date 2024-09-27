@@ -18,4 +18,6 @@ class ChurchDenominations(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
 
+    # RELACIONES
+
     church = relationship("Churches", back_populates= "church_denomination")

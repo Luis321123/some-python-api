@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import pyrebase
+
 from app.core.firebase_config import config
 from app.api.api import api_router
 from app.core.settings import get_settings
 from app.core.firebase_config import firebase
 
 settings = get_settings()
-
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth() # ?
+auth = firebase.auth()
 
 def create_application():
     application = FastAPI(title=settings.APP_NAME,

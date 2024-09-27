@@ -20,5 +20,7 @@ class Regions(BaseModel):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     deleted_at = Column(DateTime, nullable=True, default=None)
     
+    # RELACIONES
+    
     cities = relationship("Cities", back_populates="regions")
     countries = relationship("Countries", back_populates="regions", uselist=False)
