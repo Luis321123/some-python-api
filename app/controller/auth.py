@@ -4,9 +4,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import BackgroundTasks, HTTPException
 from app.core.security import hash_password, verify_password
 
-#from firebase_admin import auth
-#from app.schemas import ProviderAuth
-
 from app.core.firebase_config import firebase
 from app.models import ChurchUsers
 from app.models.User import User
@@ -18,7 +15,6 @@ from app.controller.user_session import user_session as user_session_controller
 from app.services.jwt import _generate_tokens
 from app.services.email import send_password_reset_email
 from app.schemas.auth_schemas import PasswordReset
-
 
 class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db:Session, *, email: str):
@@ -97,25 +93,15 @@ class AuthController(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
         
         
-    async def get_link_google_auth(self):
+    async def verify_google_token(self, id_token):
         try:
-            auth = firebase.auth()       
-            provider = auth.sign_in_with_email_and_password()
-            google_login_link = provider.get("providerData")[0]["email"]
-            return {"google_login_link": google_login_link}
+            auth = firebase.auth()
+            decoded_token = auth.get_account_info(id_token)
+            print(decoded_token)
+            return decoded_token
+            
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Hay un error:{str(e)}")
-        
-        
-    #async def login_with_google(data_token: ProviderAuth):
-        #try:
-           # auth = firebase.auth()    
-           # decoded_token = auth.verify_id_token(data_token.token)
-           # uid = decoded_token['uid']
-           # return {"message": "Has iniciado sesión correctamente", "uid": uid}
-        #except Exception as ex:
-            #raise HTTPException(status_code=500, detail=f"There is an error: {str(ex)}")
-
+            raise HTTPException(status_code=401, detail=f"Token inválido o expirado: {str(e)}")
 
 auth = AuthController(User)
 

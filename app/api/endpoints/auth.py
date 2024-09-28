@@ -2,12 +2,14 @@
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from fastapi import APIRouter
 
 #from app.schemas.ProviderAuth import ProviderAuth
 #from google.auth.transport import requests
 #from google.oauth2 import id_token
+
 
 from app.api.deps import get_current_church_user
 from app.core.database import get_session
@@ -47,12 +49,17 @@ async def reset_password(obj_in: PasswordReset, session: Session = Depends(get_s
     return JSONResponse(content='Se ha reiniciado su contraseña')
 
 
-@router.get('/checkout-google',status_code=status.HTTP_200_OK)
-async def get_link_google_auth():
-    current_session = await auth_controller.get_link_google_auth()
-    return current_session
-
-
+@router.post("/login/secondo/gooel")
+async def login_google(token: str, db: Session = Depends(get_session)):
+    try:
+        # Llama a la función que maneja el inicio de sesión con Google
+        response = await auth_controller.second_google_login(token=token, db=db)
+        return response
+    except HTTPException as e:
+        raise e  # Re-lanza la excepción para que FastAPI maneje el error
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error inesperado: {str(e)}")
+    
 #@router.post("/login/google")
 #async def login_with_google(data: ProviderAuth):
     #try:
@@ -74,19 +81,12 @@ async def get_link_google_auth():
         # Captura cualquier otro tipo de excepción
        # raise HTTPException(status_code=500, detail=f"Error al autenticar: {str(ex)}")
 
-
-#login con google
-async def verify_google_token(google_token):
-    decoded_token = auth.verify_id_token(google_token)
-    uid = decoded_token['uid']
-    return uid
    
-@router.post("/login/google",status_code=status.HTTP_200_OK)
-async def login_with_google(google_token: str):
-    try:
-        uid = verify_google_token(google_token)
-        return {"message": "Inicio de sesión exitoso", "uid": uid}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail="Token inválido")
-                                                #login con google
-    
+class TokenRequest(BaseModel):
+    firebase_token: str
+
+@router.post("/login/google", status_code=status.HTTP_200_OK)
+async def login_with_google(token_request: TokenRequest):
+    id_token = token_request.firebase_token
+    login = await auth_controller.verify_google_token(id_token=id_token)
+    return JSONResponse(login)
